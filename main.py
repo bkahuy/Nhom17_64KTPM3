@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import io
 import base64
+import flask as Flask
 
 
 #uvicorn main:app --reload
@@ -159,7 +160,6 @@ async def predict(input_data: PredictionInput):
         }
     except Exception as e:
         return {"error": str(e)}
-
 
 # Trang chính với form nhập liệu
 @app.get("/", response_class=HTMLResponse)
