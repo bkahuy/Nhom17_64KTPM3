@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import io
 import base64
-import flask as Flask
+
 
 
 #uvicorn main:app --reload
@@ -224,9 +224,9 @@ async def get_form():
         const data = await response.json();
         document.getElementById('result').innerHTML = `
             <h4>Kết quả dự đoán:</h4>
-            <p><strong>Random Forest:</strong> ${data.predicted_rf.toFixed(2)} USD</p>
-            <p><strong>Gradient Boosting:</strong> ${data.predicted_gb.toFixed(2)} USD</p>
-            <p><strong>SVR:</strong> ${data.predicted_svr.toFixed(2)} USD</p>
+            <p><strong>Giá vàng dự đoán theo Hồi quy tuyến tính:</strong> ${data.predicted_rf.toFixed(2)} USD</p>
+            <p><strong>Giá vàng dự đoán theo Hồi quy Lasso:</strong> ${data.predicted_gb.toFixed(2)} USD</p>
+            <p><strong>Giá vàng dự đoán theo Neural Network:</strong> ${data.predicted_svr.toFixed(2)} USD</p>
             <hr>
             <h5>Hồi quy tuyến tính:</h5>
             <p><strong>MSE:</strong> ${data.mse_lr.toFixed(4)}</p>
