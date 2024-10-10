@@ -44,6 +44,13 @@ df['Days_Since_Start'] = (df['Date'] - df['Date'].min()).dt.days
 x = df[['Open', 'Vol', 'Days_Since_Start']].values
 y = df['Price'].values
 
+# Rest of your code...
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
 # Chuẩn hóa dữ liệu
 scaler = StandardScaler()
 x_scaled = scaler.fit_transform(x)
