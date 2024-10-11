@@ -276,6 +276,7 @@ from sklearn.linear_model import LinearRegression, Lasso
 from sklearn.neural_network import MLPRegressor
 import matplotlib.pyplot as plt
 import seaborn as sns
+from mpl_toolkits import mplot3d
 import io, os
 import base64
 
@@ -306,12 +307,40 @@ data = {
 # Chuyển đổi thành DataFrame
 df = pd.DataFrame(data)
 
-# Biểu đồ phân tích chi tiết
-plt.figure(figsize=(10, 6))
+# Vẽ biểu đồ 3D
+ax = plt.axes(projection='3d')
+ax.scatter3D(df['Price'], df['Open'], df['Vol'], c=df['Price'], cmap='viridis')
+ax.set_xlabel('Price')
+ax.set_ylabel('Open')
+ax.set_zlabel('Vol')
+plt.show()
 
-# Sử dụng Seaborn để tạo biểu đồ thanh
-sns.barplot(x='Price', y='Vol', data=df)
-# Hiển thị biểu đồ
+# dùng seaborn vẽ biểu đồ thanh
+plt.figure(figsize=(14, 7))  # Tăng kích thước biểu đồ
+
+# Vẽ biểu đồ
+plt.bar(df['Price'], df['Vol'], color='red')  # Thay đổi màu sắc thanh
+
+# Điều chỉnh nhãn trục x, giảm số lượng nhãn để tránh trùng lặp
+plt.xticks(ticks=df['Price'][::10], rotation=90)  # Hiển thị nhãn mỗi 10 giá trị, điều chỉnh lại nếu cần
+
+plt.title('Price vs Vol', fontsize=16)
+plt.xlabel('Price', fontsize=12)
+plt.ylabel('Vol', fontsize=12)
+
+plt.tight_layout()  # Đảm bảo nhãn không bị cắt bớt
+plt.show()
+
+# Nhóm dữ liệu theo khoảng giá
+price_ranges = pd.cut(df['Price'], bins=[0, 1500, 8000])
+
+# Tính tổng khối lượng giao dịch cho mỗi nhóm giá
+grouped_data = df.groupby(price_ranges)['Vol'].sum()
+
+# Vẽ biểu đồ Pie
+plt.figure(figsize=(8, 8))
+plt.pie(grouped_data, labels=grouped_data.index, autopct='%1.1f%%', startangle=90)
+plt.title('Tỷ lệ khối lượng giao dịch theo khoảng giá')
 plt.show()
 
 # Biểu đồ Pair Plot cho tất cả các biến
